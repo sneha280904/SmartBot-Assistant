@@ -111,7 +111,7 @@ def getQueryResponse(inputText, chat_history=None):
         else:
             history_str = "\n".join(chat_history[-5:]) if chat_history else "No prior context."
             prompt = (
-                f"[INSTRUCTION] You are a Talent Spiral chatbot. Answer based on history:\n"
+                f"[INSTRUCTION] You are a conversational chatbot. Answer based on history:\n"
                 f"{history_str}\n"
                 f"[CURRENT QUESTION] {inputText} [END]"
             )
