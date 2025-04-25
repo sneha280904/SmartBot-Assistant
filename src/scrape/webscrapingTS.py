@@ -96,9 +96,9 @@ class GenericWebScraper:
             if text:
                 # Tagging prices or discounts for better clarity
                 if element.name == "small" and any(char.isdigit() for char in text):
-                    content.append(f"💸 Price: {text}")
+                    content.append(f"Price: {text}")
                 elif element.name == "strike" and any(char.isdigit() for char in text):
-                    content.append(f"❌ Original Fee: {text}")
+                    content.append(f"Original Fee: {text}")
                 else:
                     content.append(text)
 
