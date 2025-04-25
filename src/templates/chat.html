@@ -1,0 +1,208 @@
+<!-- This HTML file is a form that takes input from the user to register them in the application -->
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+</head>
+<body>
+    <h2>Register User</h2>
+    <form action="/users/create" method="POST">
+        <label for="first_name">First Name: </label>
+        <input type="text" id="first_name" name="first_name" required>
+        
+        <label for="last_name">Last Name: </label>
+        <input type="text" id="last_name" name="last_name">
+
+        <label for="email">Email: </label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="phone">Phone: </label>
+        <input type="tel" id="phone" name="phone" required>
+
+        <label for="userName">User Name: </label>
+        <input type="text" id="user_name" name="user_name" required>
+        
+        <label for="password">Password: </label>
+        <input type="text" id="password" name="password" required>
+        
+        <label for="confirmPassword">Confirm Password: </label>
+        <input type="text" id="confirmPassword" name="confirmPassword" required>
+
+        <label for="message">Message: </label>
+        <input type="text" id="message" name="message">
+
+        <input type="submit" value = "submit">
+    </form>
+</body>
+</html>
+ -->
+
+
+
+ <!DOCTYPE html>
+ <html lang="en">
+ 
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Chatbot</title>
+     <style>
+         body {
+             font-family: Arial, sans-serif;
+             text-align: center;
+             background-color: #f4f7fa;
+         }
+ 
+         #chat-container {
+             width: 50%;
+             margin: auto;
+             padding: 10px;
+             border: 1px solid #ccc;
+             border-radius: 10px;
+             height: 400px;
+             overflow-y: auto;
+             background-color: #ffffff;
+             display: flex;
+             flex-direction: column;
+         }
+ 
+         #chatbox {
+             flex-grow: 1;
+             overflow-y: auto;
+             display: flex;
+             flex-direction: column;
+             align-items: flex-start;
+         }
+ 
+         .message {
+             padding: 10px;
+             margin: 5px;
+             border-radius: 10px;
+             max-width: 80%;
+             word-wrap: break-word;
+         }
+ 
+         .user-message {
+             background-color: #d1e7fd;
+             align-self: flex-end;
+             text-align: right;
+         }
+ 
+         .bot-message {
+             background-color: #e2e2e2;
+             align-self: flex-start;
+             text-align: left;
+         }
+ 
+         input[type="text"] {
+             width: 40%;
+             padding: 10px;
+             border-radius: 25px;
+             border: 2px solid #ccc;
+             margin-top: 10px;
+             outline: none;
+             font-size: 16px;
+             transition: border-color 0.3s ease;
+         }
+ 
+         input[type="text"]:focus {
+             border-color: #4CAF50;
+         }
+ 
+         button {
+             padding: 10px 20px;
+             border-radius: 25px;
+             background-color: #4CAF50;
+             color: white;
+             border: none;
+             cursor: pointer;
+             transition: background-color 0.3s ease;
+         }
+ 
+         button:hover {
+             background-color: #2f7533;
+         }
+ 
+         form {
+             margin-top: 10px;
+         }
+ 
+         /* .h1 {} */
+         .CategoriesButtons {
+             padding: 10px;
+             margin: 5px;
+             border: none;
+             background-color: #007BFF;
+             color: white;
+             cursor: pointer;
+             border-radius: 5px;
+         }
+ 
+         .CategoriesButtons:hover {
+             background-color: #0056b3;
+         }
+ 
+         #h1-text {
+             font-size: 2.5vw;
+         }
+     </style>
+ </head>
+ 
+ <body>
+ 
+     <div class="h1">
+         <h1 id="h1-text">Welcome to the Chatbot!</h1>
+     </div>
+ 
+     <div id="chat-container">
+         <div id="chatbox">
+             {% for msg in chat_history %}
+             <div class="message {% if msg.sender == 'user' %}user-message {% else %}bot-message{% endif %}">
+                 {{ msg.text | safe}}
+             </div>
+             {% endfor %}
+         </div>
+     </div>
+ 
+     <form method="POST" action="/chat">
+         <input type="text" name="message" placeholder="Type here..." required autofocus>
+         <button type="submit">Send</button>
+     </form>
+ 
+     <script>
+         function scrollToBottom() {
+             var chatBox = document.getElementById("chatbox");
+             chatBox.scrollTop = chatBox.scrollHeight;
+         }
+         window.onload = function () {
+             scrollToBottom();
+         };
+         setTimeout(scrollToBottom, 100);
+ 
+ 
+         // fetch("http://127.0.0.1:5000/chat/", {
+         //     method: "POST",
+         //     headers: { "Content-Type": "application/json" },
+         //     body: JSON.stringify({ message: "Hello" })
+         // })
+         //     .then(response => response.json())
+         //     .then(data => console.log(data))
+         //     .catch(error => console.error("Error:", error));
+ 
+         // document.addEventListener("DOMContentLoaded", function () {
+         //     document.querySelectorAll(".chat-form").forEach(form => {
+         //         form.addEventListener("submit", function () {
+         //             this.querySelector(".chat-button").disabled = true;
+         //         });
+         //     });
+         // });
+ 
+     </script>
+ 
+ 
+ </body>
+ 
+ </html>
