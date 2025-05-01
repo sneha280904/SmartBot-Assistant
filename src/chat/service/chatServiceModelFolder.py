@@ -1,8 +1,8 @@
-from flask import Flask, request, jsonify, session, render_template
+from flask import session, render_template
 from config import Config
 from validation import validation
-from data.database.database import db 
-from data.model.model import User
+from database.database.database import db 
+from database.model.model import User
 import os
 import json
 import re
@@ -14,20 +14,9 @@ import torch.nn.functional as F
 
 # Global Configuration
 class ChatConfig:
-    MODEL_PATH = os.path.normpath(Config.LLAMA_MODEL_NAME)
-    DATASET_PATH = os.path.join(os.path.dirname(MODEL_PATH), "manualData.json")
+    MODEL_PATH = os.path.normpath(Config.MODEL_NAME)
+    DATASET_PATH = os.path.join(os.path.dirname(MODEL_PATH), "D:/Coding/Python-Projects/SmartBot-Assistant/src/dataset/dataset.json")
     DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    COURSE_LINKS = {
-        "data science": "https://www.talentspiral.com/courses/certification-course-in-data-science",
-        "full stack": "https://talentspiral.com/courses/certification-course-in-full-stack-web-development",
-        "data analytics": "https://www.talentspiral.com/courses/certification-course-in-data-analytics",
-        "digital marketing": "https://www.talentspiral.com/courses/certification-course-in-digital-marketing",
-        "software engineering": "https://www.talentspiral.com/courses/certification-course-in-software-engineering",
-        "hr": "https://www.talentspiral.com/courses/certification-course-in-hr",
-        "ai": "https://www.talentspiral.com/courses/certification-course-in-artificial-intelligence",
-        "cloud computing": "https://www.talentspiral.com/courses/certification-course-in-cloud-computing",
-        "drone": "https://www.talentspiral.com/courses/drone-training-beginner-certification-program"
-    }
 
 # Global Variables
 MODEL = None
@@ -130,12 +119,6 @@ def getQueryResponse(inputText, chat_history=None):
             )
             response = TOKENIZER.decode(output[0], skip_special_tokens=True).split("[END]")[-1].strip()
             response = remove_repetitions(response)
-        
-        # Append course links if applicable
-        for course, link in ChatConfig.COURSE_LINKS.items():
-            if course in input_normalized:
-                response += f"\n📌 For more information: <a href='{link}' target= '_blank' >{link}</a>"
-                break
 
         # Clear GPU memory
         if torch.cuda.is_available():
@@ -232,4 +215,6 @@ class chatServiceModelFolder:
         session.modified = True
         print(f"Updated step: {session['step']}, ChatHistory: {session['chat_history']}")
         return render_template("chat.html", chat_history=session["chat_history"])
+
+
 

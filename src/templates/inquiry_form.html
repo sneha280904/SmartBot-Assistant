@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- <---------- Meta and Title Section ---------->
+    <meta charset="UTF-8"> <!-- Set the character encoding to UTF-8 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ensure responsive layout -->
+    
+    <title>Inquiry Dashboard</title> <!-- Page title -->
+
+    <!-- <---------- Link to CSS Stylesheet ---------->
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}"> <!-- Link to custom CSS for the dashboard -->
+
+</head>
+
+<body>
+    <!-- <---------- Form Container Section ---------->
+    <div class="form-container">
+        <h2>Inquiry Dashboard</h2> <!-- Title of the dashboard page -->
+
+        <!-- <---------- Form Section for Date Input ---------->
+        <form method="POST" action="/dashboard">
+            <!-- <---------- Start Date Input ---------->
+            <label for="start_date">Start Date:</label>
+            <input type="date" id="start_date" name="start_date" required><br><br>
+
+            <!-- <---------- End Date Input ---------->
+            <label for="end_date">End Date:</label>
+            <input type="date" id="end_date" name="end_date" required><br><br>
+
+            <!-- <---------- Submit Button ---------->
+            <button type="submit">Show Inquiries</button> <!-- Button to submit the form -->
+        </form>
+    </div>
+</body>
+
+</html>
+
+

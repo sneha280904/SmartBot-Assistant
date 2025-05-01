@@ -1,4 +1,4 @@
-## working code
+
 
 import os
 from dotenv import load_dotenv
@@ -11,12 +11,9 @@ class Config:
     SECRET_KEY = os.getenv("SECRET_KEY")
     SESSION_TYPE = os.getenv("SESSION_TYPE")
     URL = os.getenv("url")
-    LLAMA_MODEL_NAME = "D:\\Coding\\ChatBot\\ML-chatbot\\src\\model\\trainedChatbot.pkl"
+    MODEL_NAME = "D:/Coding/Python-Projects/SmartBot-Assistant/src/MLModel/trainedChatbot.pkl"
     HUGGINGFACE_TOKEN = os.getenv("HUGGINGFACE_TOKEN")
 
     OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
-    # DATABASE_SERVICE_URL = os.getenv("DATABASE_SERVICE_URL")
-    # CHATBOT_SERVICE_URL = "http://127.0.0.1:5000"
-    # SCRAPER_SERVICE_URL = "http://127.0.0.1:5000"
-    # DATABASE_SERVICE_URL = "http://127.0.0.1:5000"
+

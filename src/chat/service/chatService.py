@@ -1,13 +1,13 @@
 ## working code 
 
-from flask import Flask, request, jsonify, session, render_template
+from flask import session, render_template
 from config import Config
 from validation import validation
 # import ollama
 import pickle
 import os
-from data.database.database import db 
-from data.model.model import User
+from database.database.database import db 
+from database.model.model import User
 
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
@@ -16,7 +16,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 class chatService:
     def __init__(self):
         # Load trained chatbot model using path from Config
-        model_path = Config.LLAMA_MODEL_NAME  # Load from config
+        model_path = Config.MODEL_NAME  # Load from config
         if os.path.exists(model_path):
             with open(model_path, "rb") as f:
                 self.model = pickle.load(f)
@@ -42,7 +42,6 @@ class chatService:
                     response = answers[best_match_idx]
                 else:
                     response = "Error: Model not found."
-
 
             return response
         except Exception as e:
@@ -132,3 +131,5 @@ class chatService:
         # Pass chat history to template to display it
         return render_template("chat.html", chat_history=session["chat_history"])
         # return response
+
+

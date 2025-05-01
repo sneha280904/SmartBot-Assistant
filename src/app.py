@@ -10,7 +10,7 @@ from config import Config  # Import the Config class
 from chat.routes.chatRoutes import chat_bp
 
 # importing database 
-from data.database.database import initializeDb
+from database.database.database import initializeDb
 
 from flask_cors import CORS
 

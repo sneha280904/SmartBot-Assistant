@@ -132,8 +132,8 @@ def get_response(user_input, model_data):
     return random.choice(valid_answers)
 
 if __name__ == "__main__":
-    dataset_path = "D:\\Coding\\ChatBot\\ML-chatbot\\src\\manualData.json"
-    model_save_path = "trainedChatbot.pkl"
+    dataset_path = "D:/Coding/Python-Projects/SmartBot-Assistant/src/dataset/dataset.json"
+    model_save_path = "D:/Coding/Python-Projects/SmartBot-Assistant/src/MLModel/trainedChatbot.pkl"
     train_model(dataset_path, model_save_path)
     
     model_data = load_model(model_save_path)

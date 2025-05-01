@@ -1,5 +1,12 @@
 .env
 .venv
+
 flask-session/
 __pycache__/
+__init__.py
+
 *.zip 
+*.pkl
+
+D:/Coding/Python-Projects/SmartBot-Assistant/src/dataset/dataset.json
+

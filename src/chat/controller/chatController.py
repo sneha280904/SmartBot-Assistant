@@ -42,5 +42,6 @@ class chatController:
             # return chatService.getQueryResponseService(inputText)
             return chatServiceModelFolder.getQueryResponseService(inputText)
         
-
         return jsonify(response)
+    
+    
