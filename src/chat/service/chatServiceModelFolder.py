@@ -1,34 +1,35 @@
-from flask import session, render_template
-from config import Config
-from validation import validation
-from database.database.database import db 
-from database.model.model import User
-import os
-import json
-import re
-import torch
-from transformers import AutoTokenizer, AutoModelForCausalLM
-from sentence_transformers import SentenceTransformer
-from difflib import SequenceMatcher
-import torch.nn.functional as F
+## <---------- Imports and Dependencies ---------->
+from flask import session, render_template  ## Flask session and template rendering
+from config import Config  ## Custom configuration class
+from validation import validation  ## Email and phone validation utility
+from database.database.database import db  ## SQLAlchemy DB instance
+from database.model.model import User  ## SQLAlchemy model for User
+import os  ## Operating system utilities
+import json  ## JSON file handling
+import re  ## Regular expressions
+import torch  ## PyTorch for model handling
+from transformers import AutoTokenizer, AutoModelForCausalLM  ## HuggingFace Transformers
+from sentence_transformers import SentenceTransformer  ## Semantic similarity model
+from difflib import SequenceMatcher  ## For sentence similarity
+import torch.nn.functional as F  ## Functional API for cosine similarity
 
-# Global Configuration
+## <---------- Configuration Class ---------->
 class ChatConfig:
-    MODEL_PATH = os.path.normpath(Config.MODEL_NAME)
-    DATASET_PATH = os.path.join(os.path.dirname(MODEL_PATH), "D:/Coding/Python-Projects/SmartBot-Assistant/src/dataset/dataset.json")
-    DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    MODEL_PATH = os.path.normpath(Config.MODEL_NAME)  ## Normalize model path from config
+    DATASET_PATH = os.path.join(os.path.dirname(MODEL_PATH), "D:/Coding/Python-Projects/SmartBot-Assistant/src/dataset/dataset.json")  ## Path to dataset
+    DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")  ## Use GPU if available
 
-# Global Variables
-MODEL = None
-TOKENIZER = None
-QA_DICT = None
-SIMILARITY_MODEL = None
+## <---------- Global Variables ---------->
+MODEL = None  ## Placeholder for LLM model
+TOKENIZER = None  ## Placeholder for tokenizer
+QA_DICT = None  ## Question-answer dictionary
+SIMILARITY_MODEL = None  ## Sentence similarity model
 
-# Model Initialization
+## <---------- Model Initialization Function ---------->
 def initialize_model():
     global MODEL, TOKENIZER, QA_DICT, SIMILARITY_MODEL
-    
-    if os.path.isdir(ChatConfig.MODEL_PATH):
+
+    if os.path.isdir(ChatConfig.MODEL_PATH):  ## Check if model directory exists
         print(f"Model found at {ChatConfig.MODEL_PATH}. Loading model and tokenizer...")
         TOKENIZER = AutoTokenizer.from_pretrained(ChatConfig.MODEL_PATH)
         MODEL = AutoModelForCausalLM.from_pretrained(
@@ -45,7 +46,7 @@ def initialize_model():
     else:
         print(f"Warning: Model not found at {ChatConfig.MODEL_PATH}")
 
-    if os.path.exists(ChatConfig.DATASET_PATH):
+    if os.path.exists(ChatConfig.DATASET_PATH):  ## Load dataset
         with open(ChatConfig.DATASET_PATH, "r", encoding="utf-8") as file:
             dataset = json.load(file)
             QA_DICT = {item.get("question", item.get("q", "")).lower(): item.get("answer", item.get("a", "")) for item in dataset}
@@ -56,13 +57,13 @@ def initialize_model():
     SIMILARITY_MODEL = SentenceTransformer("all-MiniLM-L6-v2")
     print("Similarity model loaded.")
 
-# Normalize User Input
+## <---------- Normalize Input ---------->
 def normalize_input(user_input):
     user_input = user_input.lower().strip()
-    user_input = re.sub(r"\bcost\b", "price", user_input)
+    user_input = re.sub(r"\bcost\b", "price", user_input)  ## Normalize keywords
     return user_input
 
-# Find Closest Question using Semantic Search
+## <---------- Semantic Similarity Search ---------->
 def find_closest_question(user_input, dataset_dict):
     if not SIMILARITY_MODEL or not dataset_dict:
         return None
@@ -75,9 +76,9 @@ def find_closest_question(user_input, dataset_dict):
     similarities = F.cosine_similarity(input_embedding_tensor.unsqueeze(0), question_embeddings_tensor)
     best_match_idx = similarities.argmax().item()
     
-    return questions[best_match_idx] if similarities[best_match_idx] > 0.6 else None
+    return questions[best_match_idx] if similarities[best_match_idx] > 0.6 else None  ## Threshold for match
 
-# Remove Repetitive Phrases
+## <---------- Remove Redundant Sentences ---------->
 def remove_repetitions(text, threshold=0.85):
     sentences = re.split(r'(?<=[.!?]) +|\n', text)
     unique_sentences = []
@@ -86,7 +87,7 @@ def remove_repetitions(text, threshold=0.85):
             unique_sentences.append(sentence)
     return " ".join(unique_sentences).strip()
 
-# Generate Response with LLM
+## <---------- Generate Response with LLM ---------->
 def getQueryResponse(inputText, chat_history=None):
     try:
         if not MODEL or not TOKENIZER:
@@ -120,21 +121,22 @@ def getQueryResponse(inputText, chat_history=None):
             response = TOKENIZER.decode(output[0], skip_special_tokens=True).split("[END]")[-1].strip()
             response = remove_repetitions(response)
 
-        # Clear GPU memory
         if torch.cuda.is_available():
-            torch.cuda.empty_cache()  # Added
+            torch.cuda.empty_cache()  ## Clear GPU memory
         
         return response
     except Exception as e:
         return f"Error: {e}"
 
-# Initialize model at startup
+## <---------- Model Initialization Call ---------->
 initialize_model()
 
+## <---------- Chat Service Class ---------->
 class chatServiceModelFolder:
     def __init__(self):
         pass
 
+    ## <---------- Main Chat Response ---------->
     def getChatResponseService(self, inputText):
         if "step" not in session:
             session["step"] = "greet"
@@ -178,6 +180,7 @@ class chatServiceModelFolder:
         print(f"Updated step: {session['step']}, ChatHistory: {session['chat_history']}")
         return render_template("chat.html", chat_history=session["chat_history"])
 
+    ## <---------- Query-Only Chat Response ---------->
     def getQueryResponseService(self, inputText):
         if "step" not in session:
             session["step"] = "greet"
@@ -215,6 +218,3 @@ class chatServiceModelFolder:
         session.modified = True
         print(f"Updated step: {session['step']}, ChatHistory: {session['chat_history']}")
         return render_template("chat.html", chat_history=session["chat_history"])
-
-
-
