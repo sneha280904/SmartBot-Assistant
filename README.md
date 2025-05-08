@@ -1,5 +1,7 @@
 # 🌟 **SmartBot** - AI-Powered Chatbot for Real-Time Assistance 🤖
 
+Note: The source code for this project has been made private intentionally.
+
 **SmartBot** is an innovative, AI-driven chatbot designed to revolutionize how businesses and individuals handle customer queries, automate support, and provide real-time assistance. With cutting-edge machine learning techniques, **SmartBot** is capable of understanding complex user queries, learning from interactions, and offering highly relevant responses. Whether you're building a personal assistant or improving customer service workflows, **SmartBot** is the intelligent solution you need!
 
 ## 🚀 **Key Features**
