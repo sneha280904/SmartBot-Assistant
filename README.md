@@ -4,6 +4,8 @@ Note: The source code for this project has been made private intentionally.
 
 **SmartBot** is an innovative, AI-driven chatbot designed to revolutionize how businesses and individuals handle customer queries, automate support, and provide real-time assistance. With cutting-edge machine learning techniques, **SmartBot** is capable of understanding complex user queries, learning from interactions, and offering highly relevant responses. Whether you're building a personal assistant or improving customer service workflows, **SmartBot** is the intelligent solution you need!
 
+---
+
 ## 🚀 **Key Features**
 
 - **💡 NLP-Powered Understanding**: Leverages Natural Language Processing (NLP) for intuitive and intelligent conversation handling.
@@ -12,32 +14,7 @@ Note: The source code for this project has been made private intentionally.
 - **⚡️ Real-Time Assistance**: Handles real-time queries, providing fast and relevant answers, whether for customer support, education, or personal use.
 - **🔧 Easy Integration**: Plug into your website, app, or support system effortlessly.
 
-## 🛠 **How to Get Started**
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/yourusername/SmartBot.git
-cd SmartBot
-```
-
-### 2. Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### 3. Run the Chatbot
-
-Run the chatbot locally and start interacting with it:
-
-```bash
-python run_bot.py
-```
-
-### 4. Try It Out!
-
-Once up and running, visit [http://localhost:5000](http://localhost:5000) to chat with **SmartBot**.
+---
 
 ## 🌍 **Use Cases**
 
@@ -46,11 +23,15 @@ Once up and running, visit [http://localhost:5000](http://localhost:5000) to cha
 - **Interactive FAQs**: Provide real-time responses to frequently asked questions on your website or app.
 - **E-commerce Assistance**: Assist users in browsing products, placing orders, and providing personalized recommendations.
 
+---
+
 ## 🔗 **Future Developments**
 
 - **🌱 Integration with Multiple Platforms**: Expand to include integrations with platforms like Slack, Facebook Messenger, and more.
 - **🤖 Multi-Language Support**: Add support for different languages, broadening the bot’s usability.
 - **🔄 Real-Time Data Fetching**: Enable the bot to fetch the latest data from live sources for even more dynamic responses.
+
+---
 
 ## 🏆 **Technologies Used**
 
