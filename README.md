@@ -43,6 +43,6 @@ Note: The source code for this project has been made private intentionally.
 
 ---
 
-**🔗 [LinkedIn Profile](https://www.linkedin.com/in/yourprofile)**
+**🔗 [LinkedIn Profile](https://www.linkedin.com/in/sneha-gupta-a78839261/)**
 
 ---
